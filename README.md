@@ -1,4 +1,5 @@
 # myUsefullCode
-save some code
+save some code.
 
-Memory always will slowly forget.
+Memory will always be forgotten
+
