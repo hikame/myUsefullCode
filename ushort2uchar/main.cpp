@@ -63,7 +63,7 @@ void common_short2uchar_neon(const ushort* in, uchar* out, int len) {
     uint16x8_t v_255 = vdupq_n_u16(255);
 
     int i = 0;
-    for(; i < len; i += 8) {
+    for(; i < len - 8; i += 8) {
         uint16x8_t data = vld1q_u16(in + i);
         float32x4_t data_high, data_low;
         data_high = vcvtq_f32_u32(vmovl_u16(vget_high_u16(data)));
