@@ -68,7 +68,19 @@ int main(int argc, char** argv) {
 
     program = clCreateProgramWithSource(context, 1, &src, NULL, &err);
     checkError(err);
-    checkError(clBuildProgram(program, 0, NULL, NULL, NULL, NULL));
+    err = clBuildProgram(program, num_devices, devices, options_name.c_str(), NULL, NULL);
+    if(CL_SUCCESS != err) {
+        cout << "clBuildProgram err" << endl;
+        size_t log_size;
+        //clGetProgramBuildInfo(program, devices[device], CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
+        checkError( clGetProgramBuildInfo(program, devices[device], CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size) );
+        char* log = (char*) malloc(log_size + 1);
+        log[log_size] = '\0';
+        checkError( clGetProgramBuildInfo(program, devices[device], CL_PROGRAM_BUILD_LOG, log_size + 1, log, NULL) );
+        cout << "err : " << endl;
+        cout << log;
+        free(log);
+    }
 
     size_t* programBinarySizes = (size_t*) malloc(num_devices * sizeof(size_t));
     checkError(clGetProgramInfo(program,

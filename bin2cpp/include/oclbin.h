@@ -12,3 +12,5 @@ typedef struct {
     }clKernel;
 
 extern const map<string, clKernel> mapOclKernel;
+
+#endif
