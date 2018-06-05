@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include "CL/cl.h"
-#include "cmdline/cmdline.h"
+#include "cmdline.h"
 using namespace std;
 #define uchar unsigned char
 
