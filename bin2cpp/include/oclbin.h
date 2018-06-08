@@ -7,10 +7,10 @@ using namespace std;
 #define uchar unsigned char
 
 typedef struct {
-        const uchar* bin;
+        const uchar bin;
         const size_t size;
     }clKernel;
 
-extern const map<string, clKernel> mapOclKernel;
+extern const map<string, clKernel> allOCLKernels;
 
 #endif

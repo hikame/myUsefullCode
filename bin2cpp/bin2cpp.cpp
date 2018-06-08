@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     //cout << "file_name : " << file_name << endl;
     stringstream len_str;
     len_str << input_str.size();
-    string output_str = "#include \"oclbin.h\"\n";
+    string output_str = "#include \"internal.h\"\n";
     output_str += "const size_t " + file_name + "_len = " + len_str.str() + ";\n";
     output_str += "const uchar " + file_name + "[] = {\n";
 

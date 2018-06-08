@@ -80,6 +80,7 @@ int main(int argc, char** argv) {
         cout << "err : " << endl;
         cout << log;
         free(log);
+        return -1;
     }
 
     size_t* programBinarySizes = (size_t*) malloc(num_devices * sizeof(size_t));

@@ -22,7 +22,7 @@ echo "" >> ${src_dir}/${itnl_head}
 echo "#include \"${itnl_head}\"" > ${src_dir}/${itnl_cpp}
 echo "#include \"${pub_head}\"" >> ${src_dir}/${itnl_cpp}
 echo >> ${src_dir}/${itnl_cpp}
-echo "extern const map<string, clKernel> mapOclKernel = {" >> ${src_dir}/${itnl_cpp}
+echo "extern const map<string, clKernel> allOCLKernels = {" >> ${src_dir}/${itnl_cpp}
 
 num=$( ls -l "${bin_dir}" | grep '^-' | wc -l )
 echo "num is ${num}"
