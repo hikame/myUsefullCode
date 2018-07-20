@@ -3,28 +3,19 @@
 
 #include "oclbin.h"
 
-extern const size_t cl_ave_pool_nchw_len;
-extern const uchar  cl_ave_pool_nchw [];
+extern const size_t conv_depthwise_nchw_len;
+extern const uchar  conv_depthwise_nchw [];
 
-extern const size_t cl_conv_nchw_depthwise_len;
-extern const uchar  cl_conv_nchw_depthwise [];
+extern const size_t mace_conv_2d_3x3_len;
+extern const uchar  mace_conv_2d_3x3 [];
 
-extern const size_t cl_gemm_rowmajor_a_trans_b_notrans_c_notrans_len;
-extern const uchar  cl_gemm_rowmajor_a_trans_b_notrans_c_notrans [];
+extern const size_t reduced_reads_5_outputs_armv7_len;
+extern const uchar  reduced_reads_5_outputs_armv7 [];
 
-extern const size_t cl_im2col_nchw_len;
-extern const uchar  cl_im2col_nchw [];
+extern const size_t reduced_reads_5_outputs_len;
+extern const uchar  reduced_reads_5_outputs [];
 
-extern const size_t cl_max_pool_nchw_len;
-extern const uchar  cl_max_pool_nchw [];
-
-extern const size_t cl_transpose_2d_len;
-extern const uchar  cl_transpose_2d [];
-
-extern const size_t cl_winograd_trans_gather_nchw_len;
-extern const uchar  cl_winograd_trans_gather_nchw [];
-
-extern const size_t cl_winograd_trans_scatter_input_nchw_len;
-extern const uchar  cl_winograd_trans_scatter_input_nchw [];
+extern const size_t snpe_len;
+extern const uchar  snpe [];
 
 #endif
