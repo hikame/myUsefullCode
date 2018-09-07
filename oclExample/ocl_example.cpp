@@ -53,8 +53,6 @@ void oclInit() {
     checkError(err);
     queue = clCreateCommandQueue(context, devices[0], 0, &err);
     checkError(err);
-    free(platforms);
-    free(devices);
 }
 
 const char* src[] = {
@@ -149,5 +147,7 @@ int main(int argc, char** argv) {
     clReleaseMemObject(a_dev);
     clReleaseMemObject(b_dev);
     clReleaseMemObject(c_dev);
+    free(platforms);
+    free(devices);
     return 0;
 }
