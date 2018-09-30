@@ -13,22 +13,22 @@ int main(int argc, char** argv) {
   int size = atoi(argv[1]);
   std::cout << "Alloc " << size << " bytes buffer." << std::endl;
   cl_int err;
-  cl_mem a_buffer = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size,  nullptr, &err);
+  cl_mem a_buffer = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size,  NULL, &err);
   checkError(err);
 
   cl_event event;
   vector<char>a_host(size, 1);
   vector<char>b_host(size);
-  checkError(clEnqueueWriteBuffer(queue, a_buffer, CL_TRUE, 0, size, a_host.data(), 0, nullptr, &event));
+  checkError(clEnqueueWriteBuffer(queue, a_buffer, CL_TRUE, 0, size, a_host.data(), 0, NULL, &event));
 
   checkError(clWaitForEvents(1, &event));
   clFinish(queue);
 
   cl_ulong time_end, time_start;
   clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_START,
-    sizeof(time_start), &time_start, nullptr);
+    sizeof(time_start), &time_start, NULL);
   clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_END,
-    sizeof(time_end), &time_end, nullptr);
+    sizeof(time_end), &time_end, NULL);
   double cost_time = time_end - time_start;
   for(int i = 0; i < 20; ++i) std::cout << "*";
   std::cout << std::endl;
@@ -42,13 +42,13 @@ int main(int argc, char** argv) {
 
 
   cl_event read_event;
-  checkError(clEnqueueReadBuffer(queue, a_buffer, CL_TRUE, 0, size, b_host.data(), 0, nullptr, &read_event));
+  checkError(clEnqueueReadBuffer(queue, a_buffer, CL_TRUE, 0, size, b_host.data(), 0, NULL, &read_event));
   checkError(clWaitForEvents(1, &read_event));
   clFinish(queue);
   clGetEventProfilingInfo(read_event, CL_PROFILING_COMMAND_START,
-    sizeof(time_start), &time_start, nullptr);
+    sizeof(time_start), &time_start, NULL);
   clGetEventProfilingInfo(read_event, CL_PROFILING_COMMAND_END,
-    sizeof(time_end), &time_end, nullptr);
+    sizeof(time_end), &time_end, NULL);
   cost_time = time_end - time_start;
 
   std::cout << "clEnqueueReadBuffer : " << std::endl;
@@ -59,14 +59,14 @@ int main(int argc, char** argv) {
   std::cout << std::endl;
 
   cl_event map_event;
-  char* ptr = (char*) clEnqueueMapBuffer(queue, a_buffer, CL_TRUE, CL_MAP_READ, 0, size, 0, nullptr, &map_event, &err);
+  char* ptr = (char*) clEnqueueMapBuffer(queue, a_buffer, CL_TRUE, CL_MAP_READ, 0, size, 0, NULL, &map_event, &err);
   checkError(err);
   checkError(clWaitForEvents(1, &map_event));
   clFinish(queue);
   clGetEventProfilingInfo(map_event, CL_PROFILING_COMMAND_START,
-    sizeof(time_start), &time_start, nullptr);
+    sizeof(time_start), &time_start, NULL);
   clGetEventProfilingInfo(map_event, CL_PROFILING_COMMAND_END,
-    sizeof(time_end), &time_end, nullptr);
+    sizeof(time_end), &time_end, NULL);
   cost_time = time_end - time_start;
   std::cout << "clEnqueueMapBuffer : " << std::endl;
   std::cout << "cost time : " << cost_time  / 1e6 << " ms "<< std::endl;
