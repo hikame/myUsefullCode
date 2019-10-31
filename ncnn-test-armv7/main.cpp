@@ -17,6 +17,8 @@ int main(int argc, char** argv) {
   psr.add<string>("iblob", 'x', "input blob name [must have.]", true, "");
   psr.add<string>("oblob", 'y', "output blob name [must have.]", true, "");
   psr.add<string>("model", 'm', "xxx.ncnn.bin", false, "");
+  psr.add<int>("height", 'h', "input height[must have]", true, 256);
+  psr.add<int>("width", 'w', "input width[must have]", true, 256);
   psr.add<int>("loop", 'l', "loop num", false, 30);
   psr.add<int>("thread", 't', "thread num", false, 1);
   psr.add("save", '\0', "save ncnn result");
@@ -53,8 +55,8 @@ int main(int argc, char** argv) {
   int num = buffer.size();
   cout << "input size (byte) : " << buffer.size() << endl;
 
-  int row = 256;
-  int col = 256;
+  int row = psr.get<int>("height");
+  int col = psr.get<int>("width");
   int channel = 3;
   ncnn::Mat src = ncnn::Mat(row, col, channel, buffer.data());
 
@@ -66,23 +68,25 @@ int main(int argc, char** argv) {
   if(psr.exist("model")) {
     ncnnNet.load_model(psr.get<string>("model").c_str());
   }
-/*
+
+
+  std::string iblob = psr.get<string>("iblob");
+  std::string oblob = psr.get<string>("oblob");
 
   // run model
   {
     ncnn::Extractor ex= ncnnNet.create_extractor();
-    ex.input("0", src);
-    ex.extract("134", dst);
-}
-*/
+    ex.input(iblob.c_str(), src);
+    ex.extract(oblob.c_str(), dst);
+  }
 
 
-/*
-  ofstream writer;
-  writer.open("./ncnn.output.dat", ofstream::binary);
-  writer.write(reinterpret_cast<char*>(dst.data), sizeof(float) * num);
-  writer.close();
+  if(psr.exist("save")) {
+    ofstream writer;
+    writer.open("./ncnn.output.dat", ofstream::binary);
+    writer.write(reinterpret_cast<char*>(dst.data), sizeof(float) * num);
+    writer.close();
+  }
 
-*/
   return 0;
 }

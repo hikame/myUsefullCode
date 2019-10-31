@@ -1,0 +1,1 @@
+aarch64-linux-android21-clang++  main.cpp -I include -I include/ncnn -L./lib -lncnn -fopenmp -L /home/pengcuo/buffer/android-ndk-r17c/platforms/android-22/arch-arm64/usr/lib/  -landroid -o test-ncnn -O3
