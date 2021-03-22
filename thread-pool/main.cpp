@@ -8,16 +8,16 @@ static std::mutex gInitMutex;
 static std::atomic<int> idx = {0};
 
 
-#define ESPRESSO_CONCURRENCY_BEGIN(__iter__, __num__)       \
+#define THREAD_CONCURRENCY_BEGIN(__iter__, __num__)       \
 {                                                  \
     std::pair<std::function<void(int)>, int> task; \
     task.second = __num__;                         \
     task.first  = [&](int __iter__) {
 
-#define ESPRESSO_CONCURRENCY_END()                                      \
+#define THREAD_CONCURRENCY_END()                                      \
     }                                                              \
     ;   \
-    espresso::ThreadPool2::enqueue(std::move(task), 0);\
+    thread::ThreadPool2::enqueue(std::move(task), 0);\
 }
 
 
@@ -56,18 +56,18 @@ int main(int argc, char** argv) {
         nums = std::atoi(argv[1]);
     }
 
-    espresso::ThreadPool2::init(nums);
+    thread::ThreadPool2::init(nums);
 
-    int task_index = espresso::ThreadPool2::acquireWorkIndex();
+    int task_index = thread::ThreadPool2::acquireWorkIndex();
 
     if (task_index >= 0){
-        espresso::ThreadPool2::active();
+        thread::ThreadPool2::active();
     }
 
 
     int thread_num = nums;
 
-    ESPRESSO_CONCURRENCY_BEGIN(tid, thread_num)
+    THREAD_CONCURRENCY_BEGIN(tid, thread_num)
     {
         int sum = 0;
         for(int i = tid; i < 20; i+= thread_num){
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
         }
         ThreadSafePrint::cout() << "TID : " << tid << " SUM : " << sum  << std::endl;
     }
-    ESPRESSO_CONCURRENCY_END();
+    THREAD_CONCURRENCY_END();
 
 
     std::cout << "nums : " << nums << std::endl;

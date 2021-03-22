@@ -1,6 +1,6 @@
 
-#ifndef ESPRESSO_THREAD_POOL_H
-#define ESPRESSO_THREAD_POOL_H
+#ifndef  _THREAD_POOL_H
+#define  _THREAD_POOL_H
 
 #include <condition_variable>
 #include <functional>
@@ -9,7 +9,7 @@
 #include <vector>
 #include <atomic>
 
-namespace espresso {
+namespace thread {
     class ThreadPool2 {
     public:
         typedef std::pair<std::function<void(int)>, int> TASK;

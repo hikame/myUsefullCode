@@ -6,9 +6,9 @@
 #include <unistd.h>
 #include <algorithm>
 
-#define ESPRESSO_THREAD_POOL_MAX_TASKS 2
+#define  _THREAD_POOL_MAX_TASKS 2
 
-namespace espresso {
+namespace thread {
     ThreadPool2* ThreadPool2::gInstance = nullptr;
     static std::mutex gInitMutex;
 
@@ -43,8 +43,8 @@ namespace espresso {
     ThreadPool2::ThreadPool2(int numberThread){
         mNumberThread = numberThread;
         mActiveCount = 0;// 需要处理的task数
-        mTaskAvailable.resize(ESPRESSO_THREAD_POOL_MAX_TASKS);
-        mTasks.resize(ESPRESSO_THREAD_POOL_MAX_TASKS);
+        mTaskAvailable.resize( _THREAD_POOL_MAX_TASKS);
+        mTasks.resize( _THREAD_POOL_MAX_TASKS);
 
         for (int task = 0; task < mTasks.size(); ++task) {
             mTaskAvailable[task] = true;
@@ -59,7 +59,7 @@ namespace espresso {
             mWorkers.emplace_back([this, threadIndex](){
                 while  (!mStop) {//线程池处于工作状态
                     while (mActiveCount > 0){
-                        for (int i = 0; i < ESPRESSO_THREAD_POOL_MAX_TASKS; ++i) {
+                        for (int i = 0; i <  _THREAD_POOL_MAX_TASKS; ++i) {
                             if (*mTasks[i].second[threadIndex]){
                                 mTasks[i].first.first(threadIndex); //执行的task
                                 {
@@ -101,7 +101,7 @@ namespace espresso {
         }
 
         std::lock_guard<std::mutex> ll(gInstance->mQueueMutex);
-        for (int i = 0; i < ESPRESSO_THREAD_POOL_MAX_TASKS; ++i) {
+        for (int i = 0; i <  _THREAD_POOL_MAX_TASKS; ++i) {
             if (gInstance->mTaskAvailable[i]){
                 gInstance->mTaskAvailable[i] = false; //返回第i个task的下标，同时将其状态置为false，这个task不可用，已经在执行
                 return i;
@@ -116,7 +116,7 @@ namespace espresso {
             return;
         }
 
-        if (index <0 || index >= ESPRESSO_THREAD_POOL_MAX_TASKS){
+        if (index <0 || index >=  _THREAD_POOL_MAX_TASKS){
             return;
         }
 
@@ -155,7 +155,7 @@ namespace espresso {
         gInstance->enqueueInternal(std::move(task),index);
     }
 
-    void ThreadPool2::enqueueInternal(espresso::ThreadPool2::TASK &&task, int index) {
+    void ThreadPool2::enqueueInternal(thread::ThreadPool2::TASK &&task, int index) {
         if (mActiveCount == 0){ //如果task为0
             for (int i = 0; i < task.second; ++i) {
                 task.first(i);
