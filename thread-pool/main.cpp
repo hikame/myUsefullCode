@@ -76,6 +76,8 @@ int main(int argc, char** argv) {
             ThreadSafePrint::cout() << "TID : " << tid << " " << i  << std::endl;
             sum += i;
         }
+
+        while(1) {}
         ThreadSafePrint::cout() << "TID : " << tid << " SUM : " << sum  << std::endl;
     }
     THREAD_CONCURRENCY_END();
