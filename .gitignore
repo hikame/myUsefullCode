@@ -3,3 +3,5 @@
 *sw1p
 *build*
 *.swp
+ndk-compile/libs/*
+ndk-compile/obj/*
