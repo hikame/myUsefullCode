@@ -5,3 +5,5 @@
 *.swp
 ndk-compile/libs/*
 ndk-compile/obj/*
+*.DS_Store
+
